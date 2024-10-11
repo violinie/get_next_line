@@ -6,12 +6,11 @@
 /*   By: hcopakov <hcopakov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:35:14 by hcopakov          #+#    #+#             */
-/*   Updated: 2024/08/21 18:58:13 by hcopakov         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:11:44 by hcopakov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -20,16 +19,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	if (!s1)
-		s1 = ft_strdup("");
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
 	len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	join = malloc(len + 1);
 	if (!join)
 		return (NULL);
 	i = 0;
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		join[i] = s1[i];
 		i++;
@@ -37,6 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	while (s2[j])
 		join[i++] = s2[j++];
+	join[i] = 0;
 	return (join);
 }
 
@@ -60,20 +58,14 @@ void	*ft_memcpy(void *dest, const void *src, size_t n) // memory copy
 	return (dest);
 }
 
-char	*ft_strdup(const char *s) // string duplicates
+void	*my_free(char **ptr)
 {
-	char	*dup;
-	size_t	len;
-
-	len = ft_strlen(s) + 1;
-	dup = (char *)malloc(len);
-	if (!dup)
-		return (NULL);
-	ft_memcpy(dup, s, len);
-	return (dup);
+	free(*ptr);
+	*ptr = NULL;
+	return (NULL);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n) // string compares
+int	ft_strncmp(const char *s1, const char *s2, size_t n) // string compare
 {
 	size_t	i;
 
@@ -97,9 +89,9 @@ int	ft_strlen(const char *s) // string length
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
-	{
 		i++;
-	}
 	return (i);
 }
